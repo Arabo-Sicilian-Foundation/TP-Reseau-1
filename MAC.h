@@ -2,7 +2,8 @@
 #define MAC_H
 
 #include <string>
-#include <bitset>
+
+using namespace std;
 
 class MAC
 {
@@ -10,7 +11,7 @@ public:
 	MAC();
 	~MAC();
 
-	std::string hmac(std::string k, std::string m);
+	string hmac(string k,string m);
 };
 
 #endif
