@@ -1,9 +1,6 @@
 #include "MAC.h"
 #include "Hash.h"
 
-#define BBITS 8
-
-
 MAC::MAC()
 {
 }
@@ -13,11 +10,11 @@ MAC::~MAC()
 {
 }
 
-std::string MAC::hmac(std::string k, std::string m)
+std::string MAC::hmac(string k, string m)
 {
-	std::string zeros;
-	std::string s_0;
-	std::string s_i = "00000000";
+	string zeros;
+	string s_0;
+	string s_i = "00000000";
 	Hash* hache = new Hash();
 
 	// s_i = xor(kplus,00110110); 
