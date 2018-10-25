@@ -14,17 +14,21 @@ Counter::~Counter()
 {
 }
 
+// Découpe le message en blocs de même taille
+// Les blocs ont une taille de 8 caractères ascii
 void Counter::decouperBlocs(string message)
 {
 	int i, j, k;
 	int combler = message.length() % 8;
 
+	// Si la taille du message n'est pas un multiple de 8, on rajoute des '0' au message
 	if (combler != 0)
 	{
 		for (i = 8;i > combler;i--)
 			message.push_back('0');
 	}
 
+	// Réparti le message dans les blocs
 	for (j = 0, k = 0;j < (int)message.length() / 8;j++, k += 8)
 	{
 		for (i = 0;i < 8;i++)
@@ -35,6 +39,8 @@ void Counter::decouperBlocs(string message)
 	nombreBlocs = j;
 }
 
+// On crée des blocs contenant les clés qui serviront à chiffrer le message clair
+// Chaque bloc est crée à partir de la clé de base et d'un compteur 
 void Counter::chiffrementCle(string cle)
 {
 	int compteur = 1;
@@ -48,11 +54,15 @@ void Counter::chiffrementCle(string cle)
 		{
 			total += (int)cle[j] * compteur;
 		}
-		total = total % (99999999 - 10000000) + 10000000;
+
+		total = total % (99999999 - 10000000) + 10000000; // On fait en sorte que le bloc ait une taille de 8 caractères
+
 		cleChiffrees[i].append(to_string(total));
+
 	}
 }
 
+// Sépare le message en blocs de même taille chiffrés et tous différents
 void Counter::counterMode(string message, string cle)
 {
 	int i, j;
@@ -63,6 +73,8 @@ void Counter::counterMode(string message, string cle)
 	chiffrementCle(cle);
 
 	cout << "Message decoupe en blocs chiffres: ";
+
+	// Chiffre les blocs avec un ou exclusif entre le bloc de message et le bloc de la clé chiffrée
 	for (j = 0;j < nombreBlocs;j++)
 	{
 		for (i = 0; i < 8; i++)
