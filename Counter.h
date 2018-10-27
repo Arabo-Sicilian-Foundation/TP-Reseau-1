@@ -14,13 +14,12 @@ public:
 	string* getDecoupageBlocs() const { return decoupageBlocs; };
 	string* getTexteChiffre() const { return texteChiffre; };
 	string* getTexteDechiffre() const { return texteDechiffre; };
-	int getNombreBlocs() const { return nombreBlocs; };
 	void decouperBlocs(string message);
 	void chiffrementCle(string cle);
 	void counterMode(string message, string cle);
 	void dechiffrerBlocs();
-private:
 	int nombreBlocs;
+private:
 	string* decoupageBlocs;
 	string* cleChiffrees;
 	string* texteChiffre;

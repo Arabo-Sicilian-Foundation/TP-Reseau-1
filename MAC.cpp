@@ -18,7 +18,7 @@ std::string MAC::hmac(string k, string m)
 	Hash* hache = new Hash();
 
 	// s_i = xor(kplus,00110110); 
-	for (int i = 0; i < k.size(); i++)
+	for (int i = 0; i < (int)k.size(); i++)
 	{
 		char tmp = k[i] ^ '6';
 		s_i[i] = tmp;
@@ -32,7 +32,7 @@ std::string MAC::hmac(string k, string m)
 	s_i = hache->getMessageHacher();
 
 	// s_0 = xor(kplus,01011100);
-	for (int i = 0; i < k.size(); i++)
+	for (int i = 0; i < (int)k.size(); i++)
 	{
 		char tmp = k[i] ^ '6';
 		s_0[i] = tmp;

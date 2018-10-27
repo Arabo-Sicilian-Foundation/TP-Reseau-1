@@ -38,6 +38,6 @@ void Vigenere::decrypter(string cle)
 
 	for (i = 0;i < tailleMessage; i++)
 	{
-		messageDecode[i] = (127 + messageCode[i] - cle[i%tailleCle]) % 127;
+		messageDecode[i] = (381 + messageCode[i] - cle[i%tailleCle]) % 127;
 	}
 }
