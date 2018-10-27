@@ -12,7 +12,7 @@ int main() {
 	string* blocsChiffres = new string[20];
 	string* blocsDechiffres = new string[20];
 
-	ctr.counterMode("Bonjoure", "Cletressecurisee");
+	ctr.counterMode("BonjoureSuivvantDab", "Cletressecurisee");
 	blocs = ctr.getTexteChiffre();
 	for (i = 0;i < ctr.nombreBlocs;i++)
 	{

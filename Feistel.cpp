@@ -23,8 +23,8 @@ string Feistel::chiffrement(string bloc, string cle)
 	{
 		// On coupe le bloc en 2
 		l = bloc.substr(0, 4);
-		r = bloc.substr(4, 7);
-
+		r = bloc.substr(4, 8);
+		cle = genSousCle(cle, nbTours);
 		// On crypte le sous bloc droit
 		Vigenere* f = new Vigenere(r);
 		f->crypter(cle);
@@ -38,7 +38,7 @@ string Feistel::chiffrement(string bloc, string cle)
 		}
 		bloc = r + resultatXOR;
 
-		cle = genSousCle(cle, nbTours);
+
 		tableauSousCle[nbTours].append(cle);
 	}
 	bloc = resultatXOR + r;
@@ -48,7 +48,7 @@ string Feistel::chiffrement(string bloc, string cle)
 string Feistel::dechiffrement(string bloc)
 {
 	string l = bloc.substr(0, 4);
-	string r = bloc.substr(4, 7);
+	string r = bloc.substr(4, 8);
 	string rDecrypte;
 	string resultatXOR = "0000";
 	string cle = "00000000";
@@ -58,12 +58,12 @@ string Feistel::dechiffrement(string bloc)
 		cle = tableauSousCle[15 - nbTours];
 		// On coupe le bloc en 2
 		l = bloc.substr(0, 4);
-		r = bloc.substr(4, 7);
+		r = bloc.substr(4, 8);
 
 		// On crypte le sous bloc droit
 		Vigenere* f = new Vigenere(r);
-		f->decrypter(cle);
-		rDecrypte = f->getMessageDecode();
+		f->crypter(cle);
+		rDecrypte = f->getMessageCode();
 
 		// On fait un XOR entre la partie droite et le resultat
 		for (int i = 0; i < (int)l.length(); i++)
