@@ -6,8 +6,7 @@ Counter::Counter()
 {
 	decoupageBlocs = new string[20];
 	cleChiffrees = new string[20];
-	texteChiffre = new string[20];
-	texteDechiffre = new string[20];
+	blocsChiffres = new string[20];
 }
 
 
@@ -68,45 +67,48 @@ void Counter::counterMode(string message, string cle)
 {
 	int i, j;
 
-	cout << "Operation de Chiffrement: Counter Mode" << endl;
-	cout << "Message de base: " << message << endl;
 	decouperBlocs(message);
 	chiffrementCle(cle);
 
-	cout << "Message decoupe en blocs chiffres: ";
-
+	cout << "-- Counter Mode --" << endl;
+	cout << "Blocs chiffres : " << endl;
 	// Chiffre les blocs avec un ou exclusif entre le bloc de message et le bloc de la clé chiffrée
 	for (j = 0;j < nombreBlocs;j++)
 	{
 		for (i = 0; i < 8; i++)
 		{
 			char temp = decoupageBlocs[j][i] ^ cleChiffrees[j][i];
-			texteChiffre[j].push_back(temp);
+			blocsChiffres[j].push_back(temp);
 		}
-		cout << texteChiffre[j] << " ";
+		cout << blocsChiffres[j] << " ";
 	}
+
 	cout << endl;
 }
 
-void Counter::dechiffrerBlocs()
+void Counter::dechiffrerBlocs(string messageChiffre[20], string cle)
 {
 	int i, j;
 
-	cout << "Blocs dechiffres: ";
+
+	// On récupère les clés chiffrées
+	chiffrementCle(cle);
+
+	cout << "-- Counter Mode --" << endl;
 
 	// Déchiffre les blocs avec un ou exclusif entre le bloc de message chiffré et le bloc de la clé chiffrée
 	for (j = 0;j < nombreBlocs;j++)
 	{
 		for (i = 0; i < 8; i++)
 		{
-			char temp = texteChiffre[j][i] ^ cleChiffrees[j][i];
+			char temp = messageChiffre[j][i] ^ cleChiffrees[j][i];
 
-			// On supprime les '#' qui ont été ajouté lors de la création des blocs
+			// On ajoute le caractère au texte déchiffré
+			// Si le caractère est '#', on ne le garde pas 
 			if(temp != '#')
-				texteDechiffre[j].push_back(temp);
+				texteDechiffre.push_back(temp);
 		}
-		cout << texteDechiffre[j] << " ";
 	}
-	cout << endl;
+	cout << "Blocs dechiffres: " << texteDechiffre << endl;
 }
 

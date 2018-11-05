@@ -11,19 +11,36 @@ class Counter
 public:
 	Counter();
 	~Counter();
+
+	// Retourne le message découpé en blocs
 	string* getDecoupageBlocs() const { return decoupageBlocs; };
-	string* getTexteChiffre() const { return texteChiffre; };
-	string* getTexteDechiffre() const { return texteDechiffre; };
+
+	// Retourne les blocs chiffrés
+	string* getBlocsChiffres() const { return blocsChiffres; };
+
+	// Retourne les blocs déchiffrés
+	string getTexteDechiffre() const { return texteDechiffre; };
+
+	// Découpe le message en blocs de même taille
 	void decouperBlocs(string message);
+
+	// Chiffre la clé
 	void chiffrementCle(string cle);
+
+	// Découpe le message, chiffre la clé puis chiffre le message
 	void counterMode(string message, string cle);
-	void dechiffrerBlocs();
+
+	// Déchiffre les blocs
+	void dechiffrerBlocs(string messageChiffre[20], string cle);
+
 	int nombreBlocs;
+
 private:
 	string* decoupageBlocs;
 	string* cleChiffrees;
-	string* texteChiffre;
-	string* texteDechiffre;
+	string* blocsChiffres;
+	string texteChiffre;
+	string texteDechiffre;
 };
 
 #endif

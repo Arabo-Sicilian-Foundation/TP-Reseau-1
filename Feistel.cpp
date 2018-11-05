@@ -24,7 +24,10 @@ string Feistel::chiffrement(string bloc, string cle)
 		// On coupe le bloc en 2
 		l = bloc.substr(0, 4);
 		r = bloc.substr(4, 8);
+
+		// On genère la sous clé
 		cle = genSousCle(cle, nbTours);
+
 		// On crypte le sous bloc droit
 		Vigenere* f = new Vigenere(r);
 		f->crypter(cle);
@@ -45,15 +48,20 @@ string Feistel::chiffrement(string bloc, string cle)
 	return bloc;
 }
 
-string Feistel::dechiffrement(string bloc)
+string Feistel::dechiffrement(string bloc, string cle)
 {
 	string l = bloc.substr(0, 4);
 	string r = bloc.substr(4, 8);
 	string rDecrypte;
 	string resultatXOR = "0000";
-	string cle = "00000000";
+	int nbTours;
+	for (nbTours = 0; nbTours < 16; nbTours++)
+	{
 
-	for (int nbTours = 0; nbTours < 16; nbTours++)
+		cle = genSousCle(cle, nbTours);
+		tableauSousCle[nbTours] = cle;
+	}
+	for (nbTours = 0; nbTours < 16; nbTours++)
 	{
 		cle = tableauSousCle[15 - nbTours];
 		// On coupe le bloc en 2
@@ -116,48 +124,6 @@ string Feistel::genSousCle(string cle, int nbTours)
 		l[l.length() - 1] = l1;
 		r[r.length() - 2] = r0;
 		r[r.length() - 1] = r1;
-	}
-
-	// on retourne la sous clé (en inversant les 2 sous blocs)
-	return r + l;
-}
-
-string Feistel::dechiffrementCle(string cle, int nbTours)
-{
-	string l = cle.substr(0, 4);
-	string r = cle.substr(4, 7);
-
-	if (nbTours % 2 == 0)
-	{
-		// Décalage de 1 bits vers la droite
-		char l0 = l[l.length() - 1];
-		char r0 = r[r.length() - 1];
-
-		for (int i = 1; i < (int)l.length(); i++)
-		{
-			l[i] = l[i - 1];
-			r[i] = r[i - 1];
-		}
-		l[0] = l0;
-		r[0] = r0;
-	}
-	else
-	{
-		// Decalage de 2 bits vers la droite
-		char l0 = l[l.length() - 2];
-		char l1 = l[l.length() - 1];
-		char r0 = r[r.length() - 2];
-		char r1 = r[r.length() - 1];
-
-		for (int i = 2; i < (int)l.length(); i++)
-		{
-			l[i] = l[i - 2];
-			r[i] = r[i - 2];
-		}
-		l[0] = l0;
-		l[1] = l1;
-		r[0] = r0;
-		r[1] = r1;
 	}
 
 	// on retourne la sous clé (en inversant les 2 sous blocs)
